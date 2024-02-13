@@ -37,13 +37,21 @@ const Button = ({name, handleClick}) => {
 }
 
 const Statistics = ({good, neutral, bad}) => {
+  const all = good + bad + neutral
+  const avg = ((good - bad) / all) || 0
+  const pos = (good / all * 100 ) || 0
+
   return(
     <>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad} </p>
+      good {good}<br/>
+      neutral {neutral}<br/>
+      bad {bad}<br/> 
+      all {all}<br/>
+      average {avg}<br/>
+      positive {pos} %<br/>
     </>
   )
 }
+
 
 export default App
