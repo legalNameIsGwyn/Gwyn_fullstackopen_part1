@@ -1,66 +1,48 @@
-const Header = (props) => {
-  return ( 
-    <h1>{props.course.name}</h1>
-   );
-}
-
-const Content = (props) => {
-  let cont = props.content.parts
-
-  return ( 
-    <>
-      <Part content={cont[0]}/>
-      <Part content={cont[1]}/>
-      <Part content={cont[2]}/>
-    </>
-   );
-}
-
-const Part = (props) => {
-
-  return (  
-    <p>
-      {props.content.name} {props.content.exercises}
-    </p>
-  );
-}
- 
-const Total = (props) => {
-  let exerciseCount = props.content.parts[0].exercises + props.content.parts[1].exercises + props.content.parts[2].exercises
- 
-  return ( 
-    <p>
-      Number of exercises {exerciseCount}
-    </p>
-   );
-}
- 
+import { useState } from 'react'
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const handleGood = () => {
+    setGood(good + 1)
+  }
+
+  const handleNeutral = () => {
+    setNeutral(neutral + 1)
+  }
+
+  const handleBad = () => {
+    setBad(bad + 1)
   }
 
   return (
-    <div>
-      <Header course={course}/>
-      <Content content={course}/>
-      <Total content={course}/>
-    </div>
+    <>
+      <h1>give feedback</h1>
+      <Button handleClick={handleGood} name="good"/>
+      <Button handleClick={handleNeutral} name="neutral"/>
+      <Button handleClick={handleBad} name="bad"/>
+      <h1>Statistics</h1>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
+    </>
+  )
+}
+
+const Button = ({name, handleClick}) => {
+  return(
+    <button onClick={handleClick}>{name}</button>
+  )
+}
+
+const Statistics = ({good, neutral, bad}) => {
+  return(
+    <>
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad} </p>
+    </>
   )
 }
 
