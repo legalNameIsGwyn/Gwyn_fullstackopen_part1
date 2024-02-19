@@ -87,18 +87,27 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(8).fill(0)) // create array w/ 0's
 
   const handleNewAnec = () => {
-    let rand = Math.floor(Math.random() * anecdotes.length - 1) + 1
+    let rand = Math.floor(Math.random() * anecdotes.length)
     setSelected(rand)
   }
 
+  const handleVote = () => {
+    // creates new array; let temp = votes is a reference to an existing array
+    const updatedVotes = [...votes]; 
+    updatedVotes[selected]++;
+    setVotes(updatedVotes);
+  };
+  
+   
   return (
     <div>
       <Anecdote anecdote={anecdotes[selected]}/>
-      <button onClick={() => handleNewAnec()}>
-        next anaecdote
-      </button>
+      <Votes voteCount={votes[selected]}/> <br/>
+      <Button text="vote" handler={() => handleVote()}/>
+      <Button text="next anecdote" handler={() => handleNewAnec()}/>
     </div>
   )
 }
@@ -110,6 +119,21 @@ const Anecdote = ({anecdote}) => {
     </p>
    );
 }
+
+const Button = ({text, handler}) => 
+  <button onClick={handler}>
+    {text}
+  </button>
+
+ 
+const Votes = ({voteCount}) => {
+  return (
+    <>
+      has {voteCount} votes
+    </>  
+  );
+}
+ 
  
 
 export default App
